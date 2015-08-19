@@ -1,0 +1,20 @@
+#!/bin/bash -x
+#
+# Run AWS Lambda function: lambda-rsa-keygen
+#
+
+## Run
+
+    lambda_function_name=lambda-rsa-keygen
+
+    aws lambda invoke \
+        --function-name "$lambda_function_name" \
+        --log-type Tail \
+        --payload "`cat event.json`" \
+        result.json |
+      jq -r '.LogResult' |
+      base64 --decode
+
+    cat result.json
+
+exit 0

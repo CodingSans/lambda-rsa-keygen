@@ -1,0 +1,57 @@
+#!/bin/bash -ex
+#
+# Install AWS Lambda function: lambda-rsa-keygen
+#
+
+## Setup
+
+    lambda_function_name=lambda-rsa-keygen
+    lambda_description="AWS Lambda function that generates RSA keys."
+    lambda_handler=lambda-rsa-keygen.handler
+    lambda_memory=1024
+    lambda_timeout=10
+
+    lambda_function_file=$lambda_function_name.js
+    lambda_assume_role_policy_file=$lambda_function_name-assume-role-policy.json
+    lambda_execution_policy_file=$lambda_function_name-execution-policy.json
+
+## Create ZIP file
+
+    lambda_zip_dir=$(mktemp -d /tmp/$lambda_function_name.XXXXXX)
+    lambda_zip_file=$lambda_zip_dir/$lambda_function_name.zip
+    zip -q -r $lambda_zip_file $lambda_function_file
+
+## Create Role and attach policies
+
+    lambda_role_arn=$(aws iam create-role \
+     --role-name "$lambda_function_name-role" \
+     --assume-role-policy-document "file://$lambda_assume_role_policy_file"\
+     --output text \
+     --query 'Role.Arn'
+    )
+
+    aws iam put-role-policy \
+      --role-name "$lambda_function_name-role" \
+      --policy-name "$lambda_function_name-policy" \
+      --policy-document "file://$lambda_execution_policy_file"
+
+    # Seems to be some timing issue here
+    sleep 10
+
+## Create the function and upload the ZIP file
+
+    aws lambda create-function \
+     --function-name "$lambda_function_name" \
+      --runtime nodejs \
+      --memory-size "$lambda_memory" \
+      --timeout "$lambda_timeout" \
+      --role "$lambda_role_arn" \
+      --handler "$lambda_handler" \
+      --description "$lambda_description" \
+      --zip-file "fileb://$lambda_zip_file"
+
+## Cleanup
+
+    rm -r $lambda_zip_dir
+
+exit 0

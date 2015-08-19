@@ -1,0 +1,22 @@
+#!/bin/bash -x
+#
+# Uninstall AWS Lambda function: lambda-rsa-keygen
+#
+
+## Uninstall
+
+    lambda_function_name=lambda-rsa-keygen
+    lambda_assume_role_policy_file=$lambda_function_name-assume-role-policy.json
+    lambda_execution_policy_file=$lambda_function_name-execution-policy.json
+
+    aws lambda delete-function \
+      --function-name "$lambda_function_name"
+
+    aws iam delete-role-policy \
+      --role-name "$lambda_function_name-role" \
+      --policy-name "$lambda_function_name-policy"
+
+    aws iam delete-role \
+      --role-name "$lambda_function_name-role"
+
+exit 0

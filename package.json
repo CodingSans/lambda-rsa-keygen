@@ -1,0 +1,21 @@
+{
+  "name": "lambda-rsa-keygen",
+  "version": "0.0.1",
+  "description": "AWS Lambda function that generates RSA keys.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:CodingSans/lambda-rsa-keygen.git"
+  },
+  "author": "LaTotty <latotty@codingsans.com>",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "install": "./lambda-rsa-keygen-install",
+    "uninstall": "./lambda-rsa-keygen-uninstall"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodingSans/lambda-rsa-keygen/issues"
+  },
+  "homepage": "https://github.com/CodingSans/lambda-rsa-keygen"
+}
