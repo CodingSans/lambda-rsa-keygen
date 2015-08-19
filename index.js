@@ -15,7 +15,7 @@ var context = {
   }
 }
 
-var m = require('./lambda-rsa-keygen.js');
+var main = require('./lambda-rsa-keygen.js');
 var event = require('./event.json');
 
-m.handler(event, context);
+main.handler(event, context);
