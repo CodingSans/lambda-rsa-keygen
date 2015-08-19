@@ -11,6 +11,7 @@
   "scripts": {
     "start": "node index.js",
     "install": "./lambda-rsa-keygen-install",
+    "run-on-aws": "./lambda-rsa-keygen-run",
     "uninstall": "./lambda-rsa-keygen-uninstall"
   },
   "license": "MIT",
