@@ -7,7 +7,7 @@
     "url": "git@github.com:CodingSans/lambda-rsa-keygen.git"
   },
   "author": "LaTotty <latotty@codingsans.com>",
-  "main": "index.js",
+  "main": "lambda-rsa-keygen.js",
   "scripts": {
     "start": "node index.js",
     "install": "./lambda-rsa-keygen-install",
