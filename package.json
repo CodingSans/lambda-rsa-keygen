@@ -10,9 +10,9 @@
   "main": "lambda-rsa-keygen.js",
   "scripts": {
     "start": "node index.js",
-    "install": "./lambda-rsa-keygen-install",
-    "run-on-aws": "./lambda-rsa-keygen-run",
-    "uninstall": "./lambda-rsa-keygen-uninstall",
+    "aws-install": "./lambda-rsa-keygen-install",
+    "aws-run": "./lambda-rsa-keygen-run",
+    "aws-uninstall": "./lambda-rsa-keygen-uninstall",
     "test": "./node_modules/.bin/jasmine-node test"
   },
   "license": "MIT",

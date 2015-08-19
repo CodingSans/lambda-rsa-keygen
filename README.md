@@ -1,4 +1,7 @@
 # lambda-rsa-keygen
+
+[![Build Status](https://travis-ci.org/CodingSans/lambda-rsa-keygen.svg?branch=master)](https://travis-ci.org/CodingSans/lambda-rsa-keygen)
+
 AWS Lambda function that generates RSA keys.
 
 ## Prerequisites
@@ -26,17 +29,17 @@ npm start
 ## Install to AWS
 
 ```
-npm run install
+npm run aws-install
 ```
 
 ## Run on AWS
 
 ```
-npm run run-on-aws
+npm run aws-run
 ```
 
 ## Unistall from AWS
 
 ```
-npm run uninstall
+npm run aws-uninstall
 ```
