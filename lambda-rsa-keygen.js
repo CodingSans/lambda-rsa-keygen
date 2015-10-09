@@ -2,21 +2,41 @@ var exec = require('child_process').exec;
 var crypto = require('crypto');
 var fs = require('fs');
 
-exports.handler = function handler(event, context) {
+exports.createRsaKeys = createRsaKeys;
+exports.handler = handler;
+
+function handler(event, context) {
+  createRsaKeys(event.size, function(err, keys) {
+    if(err) {
+      return context.fail(err);
+    }
+    return context.succeed(keys);
+  });
+};
+
+function createRsaKeys(size, callback) {
   var filename = '/tmp/' + generateRandomHexString(6);
-  createPrivateRSA(filename, event.size || 2048, function(err) {
-    if(err) { return context.fail(err); }
+  createPrivateRSA(filename, size || 2048, function(err) {
+    if(err) {
+      return callback(err);
+    }
 
     fs.readFile(filename, 'utf8', function(err, privateKey) {
-      if(err) { return context.fail(err); }
+      if(err) {
+        return callback(err);
+      }
 
       createPublicRSA(filename, function(err, publicKey) {
-        if(err) { return context.fail(err); }
+        if(err) {
+          return callback(err);
+        }
 
         fs.unlink(filename, function(err) {
-          if(err) { return context.fail(err); }
+          if(err) {
+            return callback(err);
+          }
 
-          return context.succeed({
+          return callback(null, {
             public: publicKey,
             private: privateKey
           });
@@ -24,7 +44,7 @@ exports.handler = function handler(event, context) {
       });
     });
   });
-};
+}
 
 function createPrivateRSA(filename, size, callback) {
   exec('openssl genrsa -out ' + filename + ' ' + size, function (error, stdout, stderr) {
